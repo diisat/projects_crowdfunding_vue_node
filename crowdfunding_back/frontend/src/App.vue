@@ -44,17 +44,9 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Proyectos from './components/Proyectos';
 
 export default {
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
-  data: () => ({
-    //
-  }),
+  name: 'App'
 };
 </script>
