@@ -5,19 +5,27 @@
         <header class="app-header">
           <v-toolbar visible="false">
             <v-toolbar-items>
-              <v-btn v-if="this.sesionIniciada == true" to="/principal" text>Menu Principal</v-btn>
-              <v-btn v-if="this.sesionIniciada == true" to="/perfil">Perfil</v-btn>
+              <v-btn v-if="this.sesionIniciada == false" to="/proyectos" text>Proyectos</v-btn>
+              <v-btn v-if="this.sesionIniciada == false" to="/perfil">Perfil</v-btn>
 
               <v-btn v-if="this.sesionIniciada == false" to="/iniciarSesion">Iniciar Sesion</v-btn>
               <v-btn v-if="this.sesionIniciada == false" to="/registro">Registro</v-btn>
 
               <v-spacer></v-spacer>
 
-              <v-btn v-if="this.sesionIniciada == true" @click="cerrarSesion" color="red">Cerrar Sesion</v-btn>
+              <v-btn
+                v-if="this.sesionIniciada == false"
+                @click="cerrarSesion"
+                color="red"
+              >Cerrar Sesion</v-btn>
             </v-toolbar-items>
           </v-toolbar>
         </header>
         <router-view></router-view>
+        <hr>
+        <footer class="app-footer dark-brown">
+          <p>123 Main Street | Smithfield, RI 90987 | 345-456-5678</p>
+        </footer>
       </div>
     </main>
   </v-app>
@@ -45,14 +53,12 @@ export default {
         this.sesionIniciada = false;
         this.$router.push("/iniciarSesion");
       }
-    },
-    
+    }
   },
   mounted() {
     this.bus.$on("cambiarBarra", () => {
       this.cambiarBarra();
     });
-    
   },
   created() {
     this.$router.push("/iniciarSesion");
@@ -67,8 +73,8 @@ export default {
   box-sizing: border-box;
 }
 
-.botonBarra{
-  color: #2D7C39;
+.botonBarra {
+  color: #2d7c39;
 }
 
 body {
@@ -95,7 +101,7 @@ img {
 }
 
 .app-container {
-  max-width: 80%;
+  max-width: 100%;
   margin: 0 auto;
   background-color: #fff;
 }
@@ -117,8 +123,6 @@ img {
   padding: 15px;
   border-radius: 5px;
 }
-
-
 
 .panel {
   /* needed for the flex layout*/
