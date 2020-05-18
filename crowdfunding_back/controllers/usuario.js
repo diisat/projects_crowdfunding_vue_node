@@ -5,6 +5,7 @@ exports.crear = function(req,res,next){
         nombres: req.body.nombres,
         apellidos: req.body.apellidos,
         correo: req.body.correo,
+        contrasena: req.body.contrasena,
         edad: req.body.edad,
         profesion: req.body.profesion,
         ciudad: req.body.ciudad,
