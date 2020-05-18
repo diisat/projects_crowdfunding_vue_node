@@ -1,17 +1,21 @@
 <template>
+<div>
   <v-card
     class="mx-auto"
     max-width="80%"
+    color="#C62828"
     tile
   >
-    <v-img
+    <!-- <v-img
       height="300"
       src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"
-    >
+    > -->
+    
       <v-row
         align="end"
         class="fill-height"
       >
+
         <v-col
           align-self="start"
           class="pa-0"
@@ -25,22 +29,53 @@
           >
             <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
           </v-avatar>
+
         </v-col>
+
+
         <v-col class="py-0">
           <v-list-item
             color="rgba(0, 0, 0, .4)"
             dark
           >
             <v-list-item-content>
-              <v-list-item-title class="title">{{nombres}}</v-list-item-title>
+              <v-list-item-title class="title">{{nombres}} {{apellidos}}</v-list-item-title>
               <v-list-item-subtitle>{{profesion}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-col>
+
+
       </v-row>
-    </v-img>
+    <!-- </v-img> -->
   </v-card>
-  
+
+  <v-card>
+    <v-tabs
+      v-model="tab"
+      background-color="primary"
+      dark
+    >
+      <v-tab
+        v-for="item in items"
+        :key="item.tab"
+      >
+        {{ item.tab }}
+      </v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-tab-item
+        v-for="item in items"
+        :key="item.tab"
+      >
+        <v-card flat>
+          <v-card-text>{{ item.content }}</v-card-text>
+        </v-card>
+      </v-tab-item>
+    </v-tabs-items>
+  </v-card>
+</div>
 </template>
 
 <script>
@@ -61,7 +96,12 @@ export default {
       ciudad:'',
       sitiosWeb: '',
       misProyectos:'',
-      misDonaciones:''
+      misDonaciones:'',
+      tab: null,
+        items: [
+          { tab: 'MIS PROYECTOS', content: 'MIS PROYECTOS' },
+          { tab: 'MIS DONACIONES', content: 'MIS DONACIONES' },
+        ],
 
     };
   },
