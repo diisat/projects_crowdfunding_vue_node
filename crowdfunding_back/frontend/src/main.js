@@ -1,10 +1,39 @@
 import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
+import VueRouter from 'vue-router';
+import store from './config/store';
+//import pag_donar_proyecto_selec from './views/pag_donar_proyecto_selec';
+import pag_feed_proyectos from './views/pag_feed_proyectos';
+import pag_inicio_sesion from './views/pag_inicio_sesion';
+//import pag_perfil_editar from './views/pag_perfil_editar';
+import pag_perfil_usuario from './views/pag_perfil_usuario';
+import pag_principal from './views/pag_principal';
+import pag_publicacion_proyecto from './views/pag_publicacion_proyecto'
+import pag_registro from './views/pag_registro'
+
+const routes = [
+  { path: "/iniciarSesion", component: pag_inicio_sesion },
+  { path: "/registro", component: pag_registro },
+  { path: "/perfil", component: pag_perfil_usuario },
+  { path: "/principal", component: pag_principal },
+  { path: "/publicar", component: pag_publicacion_proyecto },
+  { path: "/proyectos", component: pag_feed_proyectos },
+]
+
 
 Vue.config.productionTip = false
 
+Vue.prototype.bus = new Vue()
+
+Vue.use(VueRouter)
+Vue.use(vuetify)
+
+const router = new VueRouter({ routes });
+
 new Vue({
   vuetify,
-  render: h => h(App)
+  router,
+  store,
+  render: h => h(App),
 }).$mount('#app')
