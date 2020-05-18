@@ -1,20 +1,24 @@
 <template>
   <div class="align">
-    <v-card raised>
-      <v-list-item three-line>
-        <v-list-item-content>
-          <div class="overline mb-4">{{this.nombreAutor}}</div>
-          <v-list-item-title class="headline mb-1">{{proyecto.nombre}}</v-list-item-title>
-          <v-list-item-subtitle>{{proyecto.descripcion}}</v-list-item-subtitle>
-        </v-list-item-content>
+    <v-layout align-center="true">
+      <v-flex >
+        <v-card raised>
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline mb-4">{{this.nombreAutor}}</div>
+              <v-list-item-title class="headline mb-1">{{proyecto.nombre}}</v-list-item-title>
+              <v-list-item-subtitle>{{proyecto.descripcion}}</v-list-item-subtitle>
+            </v-list-item-content>
 
-        <!--  <v-list-item-avatar
+            <!--  <v-list-item-avatar
         tile
         size="80"
         color="grey"
-        ></v-list-item-avatar>-->
-      </v-list-item>
-    </v-card>
+            ></v-list-item-avatar>-->
+          </v-list-item>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
@@ -34,7 +38,8 @@ export default {
   created() {
     axios.get("/usuario/" + this.proyecto.idCreador).then(response => {
       if (response.status == 200) {
-        this.nombreAutor = response.data.nombres +" "+ response.data.apellidos
+        this.nombreAutor =
+          response.data.nombres + " " + response.data.apellidos;
       }
     });
   }

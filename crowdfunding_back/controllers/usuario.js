@@ -51,3 +51,13 @@ exports.borrar = function (req,res,next){
         }
     })
 }
+
+exports.index = function (req,res,next){
+    let usuarios =Usuario.find({}, function(err, usuarios){
+        if(err){
+            return next(err);
+        }else{
+            res.send(usuarios)
+        }
+    })
+}

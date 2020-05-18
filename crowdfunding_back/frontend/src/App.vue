@@ -5,8 +5,8 @@
         <header class="app-header">
           <v-toolbar visible="false">
             <v-toolbar-items>
-              <v-btn v-if="this.sesionIniciada == false" to="/proyectos" text>Proyectos</v-btn>
-              <v-btn v-if="this.sesionIniciada == false" to="/perfil">Perfil</v-btn>
+              <v-btn v-if="this.sesionIniciada == true" to="/proyectos" text>Proyectos</v-btn>
+              <v-btn v-if="this.sesionIniciada == true" to="/perfil">Perfil</v-btn>
 
               <v-btn v-if="this.sesionIniciada == false" to="/iniciarSesion">Iniciar Sesion</v-btn>
               <v-btn v-if="this.sesionIniciada == false" to="/registro">Registro</v-btn>
@@ -14,7 +14,7 @@
               <v-spacer></v-spacer>
 
               <v-btn
-                v-if="this.sesionIniciada == false"
+                v-if="this.sesionIniciada == true"
                 @click="cerrarSesion"
               >Salir</v-btn>
             </v-toolbar-items>
