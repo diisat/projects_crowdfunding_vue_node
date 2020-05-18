@@ -97,10 +97,10 @@
 </template>
 
 <script>
-
+// import Proyecto from "../components/Proyectos";
 export default {
   components: {
-   
+  //  appProyecto: Proyecto
   },
   data() {
     return {
@@ -113,13 +113,13 @@ export default {
       profesion: '',
       ciudad:'',
       sitiosWeb: '',
-      misProyectos:'',
-      misDonaciones:'',
+      misProyectos: [],
+      misDonaciones: [],
       tab: null,
-        items: [
-          { tab: 'MIS PROYECTOS', content: 'MIS PROYECTOS' },
-          { tab: 'MIS DONACIONES', content: 'MIS DONACIONES' },
-        ],
+      items: [
+          { tab: 'MIS PROYECTOS' },
+          { tab: 'MIS DONACIONES' },
+      ]
 
     };
   },

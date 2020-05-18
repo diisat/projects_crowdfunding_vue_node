@@ -30,7 +30,7 @@
             >
             <app-proyecto :proyecto="proy"></app-proyecto>
             </v-col>
-        <app-proyecto :proyecto="proy"></app-proyecto>
+        
       </v-row>
     </v-container>
   </div>
