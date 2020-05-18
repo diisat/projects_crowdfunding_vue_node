@@ -66,6 +66,9 @@ export default {
                 response => 
                     console.log(response)
         )
+        
+        alert("Registro exitoso. Ahora inicia sesión!");
+        this.$router.push("/pag_inicio_sesion");
       }
   } 
 };
