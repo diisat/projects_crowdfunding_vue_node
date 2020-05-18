@@ -45,6 +45,11 @@ export default {
       ]
     };
   },
+  computed :{
+    idCreador(){
+      return this.$store.state.id
+    }
+  },
   methods: {
     publicar() {
       if (
@@ -66,7 +71,7 @@ export default {
           cuentaBancaria: this.cuentaBancaria,
           categoria: this.categoria,
           contribuyentes: [],
-          idCreador: "5ec2f073db56da355cdab2ca"
+          idCreador: this.idCreador
         };
         axios.post("/proyecto", proyecto).then(response => {
           if (response.data == "Proyecto creado satisfactoriamente") {
