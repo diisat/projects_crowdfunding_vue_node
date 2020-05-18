@@ -1,6 +1,6 @@
 <template>
   <v-container grid-list-md fluid>
-    <v-row v-for="proy in proyectos" :key="proy._id">
+    <v-row v-for="proy in proyectos" :key="proy.nombre">
       <app-proyecto :proyecto="proy"></app-proyecto>
     </v-row>
   </v-container>
@@ -33,7 +33,6 @@ export default {
         });
       }
     });
-    console.log(this.proyectos)
   },
   mounted() {
     

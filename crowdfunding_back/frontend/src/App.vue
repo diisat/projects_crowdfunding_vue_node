@@ -16,8 +16,7 @@
               <v-btn
                 v-if="this.sesionIniciada == false"
                 @click="cerrarSesion"
-                color="red"
-              >Cerrar Sesion</v-btn>
+              >Salir</v-btn>
             </v-toolbar-items>
           </v-toolbar>
         </header>
