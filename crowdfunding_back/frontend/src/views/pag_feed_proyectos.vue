@@ -22,7 +22,14 @@
       </v-row>
     </v-container>
     <v-container>
-      <v-row v-for="proy in proyectos" :key="proy.nombre">
+      <v-row>
+            <v-col
+              v-for="proy in proyectos" :key="proy.nombre"
+              cols="12"
+              md="4"
+            >
+            <app-proyecto :proyecto="proy"></app-proyecto>
+            </v-col>
         <app-proyecto :proyecto="proy"></app-proyecto>
       </v-row>
     </v-container>

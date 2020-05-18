@@ -46,6 +46,7 @@
         </v-col>
 
 
+
       </v-row>
     <!-- </v-img> -->
   </v-card>
@@ -53,8 +54,9 @@
   <v-card>
     <v-tabs
       v-model="tab"
-      background-color="primary"
-      dark
+       background-color="transparent"
+      color="basil"
+      grow
     >
       <v-tab
         v-for="item in items"
@@ -66,12 +68,28 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item
-        v-for="item in items"
-        :key="item.tab"
+       v-for="n in 3"
+        :key="n"
       >
-        <v-card flat>
+         <v-container fluid>
+          <v-row>
+            <v-col
+              v-for="i in 6"
+              :key="i"
+              cols="12"
+              md="4"
+            >
+              <v-img
+                :src="`https://picsum.photos/500/300?image=${i * n * 5 + 10}`"
+                :lazy-src="`https://picsum.photos/10/6?image=${i * n * 5 + 10}`"
+                aspect-ratio="1"
+              ></v-img>
+            </v-col>
+          </v-row>
+        </v-container>
+        <!-- <v-card flat>
           <v-card-text>{{ item.content }}</v-card-text>
-        </v-card>
+        </v-card> -->
       </v-tab-item>
     </v-tabs-items>
   </v-card>
