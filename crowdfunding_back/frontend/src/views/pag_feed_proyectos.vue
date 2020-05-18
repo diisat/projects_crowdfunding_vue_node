@@ -1,25 +1,22 @@
 <template>
-  <!-- <v-container grid-list-md fluid>
-    <v-row v-for="pro in proyectos" :key="pro.id">
-      <app-proyecto :proyecto="pro"></app-proyecto>
+  <v-container grid-list-md fluid>
+    <v-row v-for="proy in proyectos" :key="proy._id">
+      <app-proyecto :proyecto="proy"></app-proyecto>
     </v-row>
-  </v-container> -->
-  <h1>HOLAA</h1>
+  </v-container>
+  
 </template>
 
 <script>
 import axios from '../plugins/axios'
-//import Proyecto from '../components/Proyectos'
+import Proyecto from '../components/Proyectos'
 export default {
   components: {
-    //appProyecto: Proyecto
+    appProyecto: Proyecto
   },
   data() {
     return {
-      success: false,
       proyectos: [],
-      titulo: null,
-      descripcion: null
     };
   },
   computed: {
@@ -29,7 +26,14 @@ export default {
     
   },
   created() {
-    axios.get("/proyectos").then(response => console.log(response))
+    axios.get("/proyecto").then(response =>{
+      if(response.status==200){
+        response.data.forEach(element => {
+          this.proyectos.push(element);
+        });
+      }
+    });
+    console.log(this.proyectos)
   },
   mounted() {
     

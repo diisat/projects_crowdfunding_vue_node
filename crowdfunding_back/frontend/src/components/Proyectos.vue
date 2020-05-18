@@ -6,7 +6,7 @@
     <v-list-item three-line>
       <v-list-item-content>
         <div class="overline mb-4">{{proyecto.nombre}}</div>
-        <v-list-item-title class="headline mb-1">{{this.nombreAutor}}</v-list-item-title>
+        <v-list-item-title class="headline mb-1">Jose</v-list-item-title>
         <v-list-item-subtitle>{{proyecto.descripcion}}</v-list-item-subtitle>
       </v-list-item-content>
 
@@ -26,11 +26,11 @@ export default {
       type: Object
     }
   },
-  data(){
+  /* data(){
     return {
       nombreAutor: "Jose"
     }
-  }
+  } */
 };
 </script>
 
