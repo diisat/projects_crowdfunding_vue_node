@@ -13,15 +13,12 @@
 
               <v-spacer></v-spacer>
 
-              <v-btn
-                v-if="this.sesionIniciada == true"
-                @click="cerrarSesion"
-              >Salir</v-btn>
+              <v-btn v-if="this.sesionIniciada == true" @click="cerrarSesion">Salir</v-btn>
             </v-toolbar-items>
           </v-toolbar>
         </header>
         <router-view></router-view>
-        <hr>
+        <hr />
         <footer class="app-footer dark-brown">
           <p>123 Main Street | Smithfield, RI 90987 | 345-456-5678</p>
         </footer>
@@ -49,6 +46,17 @@ export default {
     },
     cerrarSesion() {
       if (confirm("Seguro desea cerrar sesion?")) {
+        this.$store.commit("changeTheID", "");
+        this.$store.commit("changeTheNombres", "");
+        this.$store.commit("changeTheApellidos", "");
+        this.$store.commit("changeTheCorreo", "");
+        this.$store.commit("changeTheContrasena", "");
+        this.$store.commit("changeTheEdad", "");
+        this.$store.commit("changeTheProfesion", "");
+        this.$store.commit("changeTheCiudad", "");
+        this.$store.commit("changeTheSitiosWeb", "");
+        this.$store.commit("changeTheMisProyectos", []);
+        this.$store.commit("changeTheMisDonaciones", []);
         this.sesionIniciada = false;
         this.$router.push("/iniciarSesion");
       }
