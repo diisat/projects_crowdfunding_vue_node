@@ -30,6 +30,20 @@ export default {
               if (element.contrasena == this.contrasena) {
                 alert("Ha iniciado sesión");
                 this.respuesta = true;
+
+                this.$store.commit("changeTheID", element._id);
+                this.$store.commit("changeTheNombres", element.nombres);
+                this.$store.commit("changeTheApellidos", element.apellidos);
+                this.$store.commit("changeTheCorreo", element.correo);
+                this.$store.commit("changeTheContrasena",element.contrasena);
+                this.$store.commit("changeTheEdad", element.edad);
+                this.$store.commit("changeTheProfesion", element.profesion);
+                this.$store.commit("changeTheCiudad", element.ciudad);
+                this.$store.commit("changeTheSitiosWeb", element.sitiosWeb);
+                this.$store.commit("changeTheMisProyectos", element.misProyectos);
+                this.$store.commit("changeTheMisDonaciones", element.misDonaciones);
+
+            
                 this.bus.$emit("cambiarBarra");
                 this.$router.push("/proyectos");
               }
