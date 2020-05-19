@@ -1,33 +1,22 @@
 <template>
-  <div >
+  <div>
+    <v-btn class="btnEstilo" to="/publicar" color="#A51F1F" dark>Publica</v-btn>
+    <v-menu offset-y>
+      <template v-slot:activator="{ on: menu }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on: tooltip }">
+            <v-btn class="filtrosEstilo" color="#A51F1F" dark v-on="{ ...tooltip, ...menu }">Filtros</v-btn>
+          </template>
+          <span>Filtro Actual: {{filtroActual}}</span>
+        </v-tooltip>
+      </template>
+      <v-list>
+        <v-list-item v-for="(filtro, index) in filtros" :key="index" @click="cambiarFiltro(filtro)">
+          <v-list-item-title>{{ filtro.titulo }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
 
-    <v-container fluid>
-      <v-row>
-        <v-col cols="12">
-          <v-row :align="alignmentBoton" :justify="justifyBoton">
-            <v-btn to="/publicar" color="#A51F1F" dark >Publica</v-btn>
-            <v-menu offset-y>
-            <template v-slot:activator="{ on }">
-              <v-btn  color="#A51F1F" dark v-on="on">Filtros</v-btn>
-            </template>
-            <v-list>
-              <v-list-item
-                v-for="(filtro, index) in filtros"
-                :key="index"
-                @click="cambiarFiltro(filtro)"
-              >
-                <v-list-item-title>{{ filtro.titulo }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          </v-row>
-          <v-row :align="alignmentFiltro" :justify="justifyFiltro">
-            
-          </v-row>
-        </v-col>
-     
-      </v-row>
-    </v-container>
     <v-container>
       <v-row>
         <v-col v-for="proy in proyectos" :key="proy.nombre" cols="12" md="4">
@@ -47,11 +36,7 @@ export default {
   },
   data() {
     return {
-      alignmentBoton: 'start',
-      justifyBoton: 'start',
-      alignmentFiltro: 'end',
-      justifyFiltro: 'end',
-      filtroActual: "",
+      filtroActual: "Todos",
       proyectosTodos: [],
       proyectos: [],
       filtros: [
@@ -77,6 +62,7 @@ export default {
   mounted() {},
   methods: {
     cambiarFiltro(filtro) {
+      this.filtroActual = filtro.titulo;
       if (filtro.titulo == "Todos") {
         this.proyectos = this.proyectosTodos;
       } else {
@@ -97,6 +83,11 @@ export default {
   margin-left: 1%;
   margin-right: 1%;
 }
+
+.btnEstilo {
+  margin-left: 4%;
+}
+
 .filtrosEstilo {
   margin-left: 2%;
 }

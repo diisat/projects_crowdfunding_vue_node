@@ -65,33 +65,43 @@ export default {
       ) {
         alert("Complete todos los campos");
       } else {
-        let proyecto = {
-          nombre: this.nombre,
-          descripcion: this.descripcion,
-          dineroNecesario: this.dineroNecesario,
-          dineroActual: 0,
-          vigencia: this.vigencia,
-          cuentaBancaria: this.cuentaBancaria,
-          categoria: this.categoria,
-          contribuyentes: [],
-          idCreador: this.idCreador
-        };
-        axios.post("/proyecto", proyecto).then(response => {
-          if (response.status == 200) {
-            this.proyCreador = this.proyectosCreador;
-            this.proyCreador.push(response.data);
-            this.$store.commit("changeTheMisProyectos", this.proyCreador);
+        if (
+          isNaN(this.dineroNecesario) ||
+          isNaN(this.vigencia) ||
+          isNaN(this.cuentaBancaria)
+        ) {
+          alert(
+            "Los campos: Vigencia, Dinero necesario y Cuenta Bancaria deben ser datos numéricos."
+          );
+        } else {
+          let proyecto = {
+            nombre: this.nombre,
+            descripcion: this.descripcion,
+            dineroNecesario: this.dineroNecesario,
+            dineroActual: 0,
+            vigencia: this.vigencia,
+            cuentaBancaria: this.cuentaBancaria,
+            categoria: this.categoria,
+            contribuyentes: [],
+            idCreador: this.idCreador
+          };
+          axios.post("/proyecto", proyecto).then(response => {
+            if (response.status == 200) {
+              this.proyCreador = this.proyectosCreador;
+              this.proyCreador.push(response.data);
+              this.$store.commit("changeTheMisProyectos", this.proyCreador);
 
-            let usuario = {
-              misProyectos: this.proyCreador
-            };
-            axios
-              .put("/usuario/"+this.idCreador, usuario)
-              .then(response => console.log(response));
+              let usuario = {
+                misProyectos: this.proyCreador
+              };
+              axios
+                .put("/usuario/" + this.idCreador, usuario)
+                .then(response => console.log(response));
 
-            this.$router.push("/proyectos");
-          }
-        });
+              this.$router.push("/proyectos");
+            }
+          });
+        }
       }
     },
     cambiarCategoria(cat) {
