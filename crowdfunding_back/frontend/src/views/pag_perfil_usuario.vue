@@ -6,10 +6,6 @@
     color="#C62828"
     tile
   >
-    <!-- <v-img
-      height="300"
-      src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"
-    > -->
     
       <v-row
         align="end"
@@ -21,6 +17,8 @@
           class="pa-0"
           cols="12"
         >
+
+        <!-- AVATAR -->
           <v-avatar
             class="profile"
             color="grey"
@@ -32,7 +30,7 @@
 
         </v-col>
 
-
+        <!-- INFO -->
         <v-col class="py-0">
           <v-list-item
             color="rgba(0, 0, 0, .4)"
@@ -40,15 +38,21 @@
           >
             <v-list-item-content>
               <v-list-item-title class="title">{{nombres}} {{apellidos}}</v-list-item-title>
-              <v-list-item-subtitle>{{profesion}}</v-list-item-subtitle>
+              <v-list-item-subtitle>Edad: {{edad}}</v-list-item-subtitle>
+              <v-list-item-subtitle>Profesión: {{profesion}}</v-list-item-subtitle>
+              <v-list-item-subtitle>Ciudad: {{ciudad}}</v-list-item-subtitle>
+              <v-list-item-subtitle>Correo Electrónico: {{correo}}</v-list-item-subtitle>
+              <v-list-item-subtitle>Sitios Web: {{sitiosWeb}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-col>
 
 
 
+
+
       </v-row>
-    <!-- </v-img> -->
+   
   </v-card>
 
   <v-card>
@@ -68,8 +72,8 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item
-       v-for="n in 3"
-        :key="n"
+       v-for="item in items"
+        :key="item"
       >
          <v-container fluid>
           <v-row>
@@ -79,11 +83,21 @@
               cols="12"
               md="4"
             >
-              <v-img
+
+            <!-- TODO, hacer cambio aqui -->
+            <!-- <v-col   
+              v-for="proy in misProyectos" :key="proy.nombre"
+              cols="12"
+              md="4"
+            >
+
+            <app-proyecto :proyecto="proy"></app-proyecto> -->
+
+              <!-- <v-img
                 :src="`https://picsum.photos/500/300?image=${i * n * 5 + 10}`"
                 :lazy-src="`https://picsum.photos/10/6?image=${i * n * 5 + 10}`"
                 aspect-ratio="1"
-              ></v-img>
+              ></v-img> -->
             </v-col>
           </v-row>
         </v-container>
@@ -104,15 +118,15 @@ export default {
   },
   data() {
     return {
-      id: '',
-      nombres: '',
-      apellidos: '',
-      correo: '',
-      contrasena: '',
+      id: "",
+      nombres: "",
+      apellidos: "",
+      correo: "",
+      contrasena: "",
       edad: 0,
-      profesion: '',
-      ciudad:'',
-      sitiosWeb: '',
+      profesion: "",
+      ciudad:"",
+      sitiosWeb: "",
       misProyectos: [],
       misDonaciones: [],
       tab: null,

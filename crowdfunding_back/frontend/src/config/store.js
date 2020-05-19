@@ -38,20 +38,20 @@ export default new Vuex.Store({
     changeTheEdad(state, newEdad) {
         state.edad = newEdad;
     },
-    changeProfesion(state, newProfesion) {
+    changeTheProfesion(state, newProfesion) {
         state.profesion = newProfesion;
     },
-    changeCiudad(state, newCiudad) {
+    changeTheCiudad(state, newCiudad) {
         state.ciudad = newCiudad;
     },
-    changeSitiosWeb(state, newSitiosWeb) {
+    changeTheSitiosWeb(state, newSitiosWeb) {
         state.sitiosWeb = newSitiosWeb;
     },
-    changeMisProyectos(state, newMisProyectos) {
-        state.sitiosWeb = newMisProyectos;
+    changeTheMisProyectos(state, newMisProyectos) {
+        state.misProyectos = newMisProyectos;
     },
-    changeMisDonaciones(state, newMisDonaciones) {
-        state.sitiosWeb = newMisDonaciones;
+    changeTheMisDonaciones(state, newMisDonaciones) {
+        state.misDonaciones = newMisDonaciones;
     },
     
   },
