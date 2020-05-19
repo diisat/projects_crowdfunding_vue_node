@@ -1,11 +1,11 @@
 <template>
   <div class="margen">
     <h2 class="titulo">PUBLICACIÓN PROYECTO</h2>
-    <v-text-field class="margenCampos" v-model="nombre" label="Nombre"></v-text-field>
-    <v-text-field class="margenCampos" v-model="descripcion" label="Descripcion"></v-text-field>
+    <v-text-field outlined class="margenCampos" v-model="nombre" label="Nombre"></v-text-field>
+    <v-textarea outlined rows="4" row-height="30" class="margenCampos" label="Descripción" v-model="descripcion"></v-textarea>
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
-        <v-btn class="margenCampos" v-on="on">{{categoria}}</v-btn>
+        <v-btn class="margenCampos margenAbajo" v-on="on">{{categoria}}</v-btn>
       </template>
       <v-list>
         <v-list-item
@@ -17,9 +17,9 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-text-field class="margenCampos" v-model="dineroNecesario" label="Dinero Necesario"></v-text-field>
-    <v-text-field class="margenCampos" v-model="vigencia" label="Vigencia (días)"></v-text-field>
-    <v-text-field class="margenCampos" v-model="cuentaBancaria" label="Cuenta Bancaria"></v-text-field>
+    <v-text-field outlined class="margenCampos" v-model="dineroNecesario" label="Dinero Necesario"></v-text-field>
+    <v-text-field outlined class="margenCampos" v-model="vigencia" label="Vigencia (días)"></v-text-field>
+    <v-text-field outlined class="margenCampos" v-model="cuentaBancaria" label="Cuenta Bancaria"></v-text-field>
 
     <v-btn @click="publicar" type="submit" color="#A51F1F" dark class="titulo">PUBLICAR</v-btn>
   </div>
@@ -125,5 +125,9 @@ export default {
 
 .margenCampos {
   margin-top: 3%;
+}
+
+.margenAbajo{
+  margin-bottom: 3%
 }
 </style>
