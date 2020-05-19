@@ -1,6 +1,5 @@
 <template>
   <div class="margen">
-    
     <h2 class="titulo">PUBLICACIÓN PROYECTO</h2>
     <v-text-field class="margenCampos" v-model="nombre" label="Nombre"></v-text-field>
     <v-text-field class="margenCampos" v-model="descripcion" label="Descripcion"></v-text-field>
@@ -31,6 +30,7 @@ import axios from "../plugins/axios";
 export default {
   data() {
     return {
+      proyCreador: [],
       nombre: "",
       descripcion: "",
       dineroNecesario: "",
@@ -45,9 +45,12 @@ export default {
       ]
     };
   },
-  computed :{
-    idCreador(){
-      return this.$store.state.id
+  computed: {
+    idCreador() {
+      return this.$store.state.id;
+    },
+    proyectosCreador() {
+      return this.$store.state.misProyectos;
     }
   },
   methods: {
@@ -74,8 +77,18 @@ export default {
           idCreador: this.idCreador
         };
         axios.post("/proyecto", proyecto).then(response => {
-          if (response.data == "Proyecto creado satisfactoriamente") {
-            this.resultadoBueno = true;
+          if (response.status == 200) {
+            this.proyCreador = this.proyectosCreador;
+            this.proyCreador.push(response.data);
+            this.$store.commit("changeTheMisProyectos", this.proyCreador);
+
+            let usuario = {
+              misProyectos: this.proyCreador
+            };
+            axios
+              .put("/usuario/"+this.idCreador, usuario)
+              .then(response => console.log(response));
+
             this.$router.push("/proyectos");
           }
         });

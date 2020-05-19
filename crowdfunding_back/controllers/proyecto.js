@@ -18,7 +18,7 @@ exports.crear = function (req, res, next) {
         if(err){
             return next(err)
         }else{
-            res.send('Proyecto creado satisfactoriamente')
+            res.send(proyecto._id)
         }
     })
 

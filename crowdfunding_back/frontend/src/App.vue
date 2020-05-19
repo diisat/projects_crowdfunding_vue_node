@@ -18,10 +18,7 @@
           </v-toolbar>
         </header>
         <router-view></router-view>
-        <hr />
-        <footer class="app-footer dark-brown">
-          <p>123 Main Street | Smithfield, RI 90987 | 345-456-5678</p>
-        </footer>
+        
       </div>
     </main>
   </v-app>
@@ -90,7 +87,6 @@ body {
 }
 
 main {
-  padding: 3%;
   font-family: "Roboto", "sans-serif";
   background: #fff top center repeat;
   color: #444;
@@ -110,49 +106,21 @@ img {
 .app-container {
   max-width: 100%;
   margin: 0 auto;
-  background-color: #fff;
+  background-color: #E8E8E8;
 }
 
 .app-container > * {
   border-radius: 5px;
   font-size: 150%;
-  margin-bottom: 10px;
+  margin-bottom: 3%;
 }
 
-.wrapper {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-auto-rows: minmax(150px, auto);
-}
-
-.wrapper > * {
-  padding: 15px;
-  border-radius: 5px;
-}
-
-.panel {
-  /* needed for the flex layout*/
-  margin-left: 5px;
-  margin-right: 5px;
-  flex: 1 1 200px;
-}
-
-.tall-panel {
-  grid-row-end: span 2;
-}
 
 .app-header,
 .app-footer {
   flex: 0 1 100%;
-  padding: 15px;
   text-align: center;
+  background-color: #fff;
 }
 
-/* We need to set the margin used on flex items to 0 as we have gaps in grid.  */
-@supports (display: grid) {
-  .wrapper > * {
-    margin: 0;
-  }
-}
 </style>

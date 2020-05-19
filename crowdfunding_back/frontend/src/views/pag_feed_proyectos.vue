@@ -1,12 +1,14 @@
 <template>
-  <div class="margen">
-    <v-container>
+  <div >
+
+    <v-container fluid>
       <v-row>
-        <v-col><v-btn to="/publicar" color="#A51F1F" dark v-on="on">Publica</v-btn></v-col>
-        <v-col>
-          <v-menu offset-y>
+        <v-col cols="12">
+          <v-row :align="alignmentBoton" :justify="justifyBoton">
+            <v-btn to="/publicar" color="#A51F1F" dark >Publica</v-btn>
+            <v-menu offset-y>
             <template v-slot:activator="{ on }">
-              <v-btn class="alinearDerecha" color="#A51F1F" dark v-on="on">Filtros</v-btn>
+              <v-btn  color="#A51F1F" dark v-on="on">Filtros</v-btn>
             </template>
             <v-list>
               <v-list-item
@@ -18,19 +20,19 @@
               </v-list-item>
             </v-list>
           </v-menu>
+          </v-row>
+          <v-row :align="alignmentFiltro" :justify="justifyFiltro">
+            
+          </v-row>
         </v-col>
+     
       </v-row>
     </v-container>
     <v-container>
       <v-row>
-            <v-col
-              v-for="proy in proyectos" :key="proy.nombre"
-              cols="12"
-              md="4"
-            >
-            <app-proyecto :proyecto="proy"></app-proyecto>
-            </v-col>
-        
+        <v-col v-for="proy in proyectos" :key="proy.nombre" cols="12" md="4">
+          <app-proyecto :proyecto="proy"></app-proyecto>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -45,6 +47,10 @@ export default {
   },
   data() {
     return {
+      alignmentBoton: 'start',
+      justifyBoton: 'start',
+      alignmentFiltro: 'end',
+      justifyFiltro: 'end',
       filtroActual: "",
       proyectosTodos: [],
       proyectos: [],
@@ -81,21 +87,17 @@ export default {
           }
         });
       }
-    },
-   
+    }
   }
 };
 </script>
 
 <style>
 .margen {
+  margin-left: 1%;
+  margin-right: 1%;
+}
+.filtrosEstilo {
   margin-left: 2%;
-  margin-right: 2%;
-}
-.alinearDerecha {
-  margin-left: 100%;
-}
-.verticalidad {
-  float: left;
 }
 </style>
