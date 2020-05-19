@@ -82,21 +82,15 @@
       >
          <v-container fluid>
           <v-row>
-            <v-col
-              v-for="i in 6"
-              :key="i"
-              cols="12"
-              md="4"
-            >
 
             <!-- TODO, hacer cambio aqui -->
-            <!-- <v-col   
+            <v-col   
               v-for="proy in misProyectos" :key="proy.nombre"
               cols="12"
               md="4"
             >
 
-            <app-proyecto :proyecto="proy"></app-proyecto> -->
+            <app-proyecto :proyecto="proy"></app-proyecto>
 
               <!-- <v-img
                 :src="`https://picsum.photos/500/300?image=${i * n * 5 + 10}`"
@@ -113,12 +107,12 @@
 </template>
 
 <script>
-// import Proyecto from "../components/Proyectos";
-// import axios from "../plugins/axios";
+import Proyecto from "../components/Proyectos";
+import axios from "../plugins/axios";
 
 export default {
   components: {
-  //  appProyecto: Proyecto
+   appProyecto: Proyecto
   },
   data() {
     return {
@@ -133,6 +127,7 @@ export default {
       sitiosWeb: "",
       misProyectos: [],
       misDonaciones: [],
+      cont: 0,
       tab: null,
       items: [
           { tab: 'MIS PROYECTOS' },
@@ -183,8 +178,29 @@ export default {
     (this.profesion = this.profesion_usu),
     (this.ciudad = this.ciudad_usu),
     (this.sitiosWeb = this.sitiosWeb_usu),
-    (this.misProyectos = this.misProyectos_usu),
-    (this.misDonaciones = this.misDonaciones_usu)
+
+    console.log(this.misProyectos_usu);
+
+    this.misProyectos_usu.forEach(element => {
+      console.log(element);
+      axios.get("/proyecto/"+element+"").then(response => {
+       if (response.status == 200) {
+         this.misProyectos.push(response.data);
+
+       }
+      })
+    });
+
+    this.misDonaciones_usu.forEach(element => {
+      console.log(element);
+      axios.get("/proyecto/"+element+"").then(response => {
+       if (response.status == 200) {
+         this.misDonaciones.push(response.data);
+
+       }
+      })
+    });
+
       
   },
   methods:{
