@@ -5,16 +5,22 @@
         <header class="app-header">
           <v-toolbar visible="false">
             <v-toolbar-items>
-              <v-btn v-if="this.sesionIniciada == true" to="/proyectos" text>Proyectos</v-btn>
-              <v-btn v-if="this.sesionIniciada == true" to="/perfil">Perfil</v-btn>
+              
+              <!-- <v-icon class="profile" color="grey" size="40" tile>
+               <v-img src="../images/castor.png"></v-img>
+             </v-icon> -->
 
               <v-btn v-if="this.sesionIniciada == false" to="/iniciarSesion">Iniciar Sesion</v-btn>
               <v-btn v-if="this.sesionIniciada == false" to="/registro">Registro</v-btn>
+              </v-toolbar-items>
 
               <v-spacer></v-spacer>
+              <v-btn  v-if="this.sesionIniciada == true" to="/proyectos" text>Proyectos</v-btn>
+               <v-btn  v-if="this.sesionIniciada == true" to="/perfil" text>Perfil</v-btn>
 
-              <v-btn v-if="this.sesionIniciada == true" @click="cerrarSesion">Salir</v-btn>
-            </v-toolbar-items>
+              <v-btn icon  v-if="this.sesionIniciada == true" @click="cerrarSesion"><v-icon>mdi-export</v-icon> </v-btn>
+              <!-- <v-btn v-if="this.sesionIniciada == true" @click="cerrarSesion">Salir</v-btn> -->
+            
           </v-toolbar>
         </header>
           <router-view></router-view>
