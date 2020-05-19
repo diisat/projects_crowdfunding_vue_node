@@ -8,21 +8,24 @@
   >
     
       <v-row
-        align="end"
+        align="center"
         class="fill-height"
       >
 
         <v-col
           align-self="start"
+          cols="3"
+        >
+        <!-- <v-col
+          align-self="start"
           class="pa-0"
           cols="12"
-        >
-
+        > -->
         <!-- AVATAR -->
           <v-avatar
             class="profile"
             color="grey"
-            size="164"
+            size="170"
             tile
           >
             <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
@@ -31,7 +34,7 @@
         </v-col>
 
         <!-- INFO -->
-        <v-col class="py-0">
+        <v-col >
           <v-list-item
             color="rgba(0, 0, 0, .4)"
             dark
@@ -47,11 +50,13 @@
           </v-list-item>
         </v-col>
 
-
-
-
-
+        <v-col >
+          <!-- BOTON EDITAR -->
+          <v-btn @click="editarPerfil" type="submit" color="#43A047" dark class="titulo">EDITAR MI PERFIL</v-btn>
+        </v-col>
       </v-row>
+
+      
    
   </v-card>
 
@@ -101,9 +106,6 @@
             </v-col>
           </v-row>
         </v-container>
-        <!-- <v-card flat>
-          <v-card-text>{{ item.content }}</v-card-text>
-        </v-card> -->
       </v-tab-item>
     </v-tabs-items>
   </v-card>
@@ -112,6 +114,8 @@
 
 <script>
 // import Proyecto from "../components/Proyectos";
+// import axios from "../plugins/axios";
+
 export default {
   components: {
   //  appProyecto: Proyecto
@@ -182,7 +186,13 @@ export default {
     (this.misProyectos = this.misProyectos_usu),
     (this.misDonaciones = this.misDonaciones_usu)
       
-  }  
+  },
+  methods:{
+    editarPerfil(){
+
+    }
+  }
+
 };
 </script>
 
