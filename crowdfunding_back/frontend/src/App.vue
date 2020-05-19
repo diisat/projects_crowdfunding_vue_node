@@ -17,8 +17,7 @@
             </v-toolbar-items>
           </v-toolbar>
         </header>
-        <router-view></router-view>
-        
+          <router-view></router-view>
       </div>
     </main>
   </v-app>
@@ -77,6 +76,8 @@ export default {
   box-sizing: border-box;
 }
 
+
+
 .botonBarra {
   color: #2d7c39;
 }
@@ -106,7 +107,8 @@ img {
 .app-container {
   max-width: 100%;
   margin: 0 auto;
-  background-color: #E8E8E8;
+  /* background-color: #e8e8e8; */
+  background-color: #fff;
 }
 
 .app-container > * {
@@ -115,12 +117,10 @@ img {
   margin-bottom: 3%;
 }
 
-
 .app-header,
 .app-footer {
   flex: 0 1 100%;
   text-align: center;
   background-color: #fff;
 }
-
 </style>

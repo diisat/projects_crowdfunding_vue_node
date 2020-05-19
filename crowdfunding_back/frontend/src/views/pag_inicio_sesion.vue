@@ -1,8 +1,8 @@
 <template>
   <div class="margen">
     <h2 class="titulo">Inicio de Sesion</h2>
-    <v-text-field v-model="email" label="Email"></v-text-field>
-    <v-text-field v-model="contrasena" :type="'password'" label="Contraseña"></v-text-field>
+    <v-text-field outlined v-model="email" label="Email"></v-text-field>
+    <v-text-field outlined v-model="contrasena" :type="'password'" label="Contraseña"></v-text-field>
     <v-btn @click="iniciarSesion" type="submit" color="#A51F1F" dark class="titulo">INICIAR SESION</v-btn>
   </div>
 </template>
@@ -64,7 +64,10 @@ export default {
   margin-left: 20%;
   margin-right: 20%;
 }
-
+.page {
+  position: fixed;
+  width: inherit;
+}
 .titulo {
   margin-top: 10%;
   text-align: center;

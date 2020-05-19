@@ -78,4 +78,5 @@ export default {
 .margen {
   margin-top: 2%;
 }
+
 </style>
