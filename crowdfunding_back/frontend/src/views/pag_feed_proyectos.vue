@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>ENTRE MÁS CASTORES HAYAN, MEJOR SERÁ LA REPRESA</p>
-    <hr>
+    <hr />
     <v-btn class="btnEstilo" to="/publicar" color="#A51F1F" dark>Publica</v-btn>
     <v-menu offset-y>
       <template v-slot:activator="{ on: menu }">
@@ -18,7 +18,7 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    
+
     <v-container>
       <v-row>
         <v-col v-for="proy in proyectos" :key="proy.nombre" cols="12" md="4">
@@ -53,6 +53,8 @@ export default {
   },
   computed: {},
   created() {
+    
+
     axios.get("/proyecto").then(response => {
       if (response.status == 200) {
         response.data.forEach(element => {
@@ -82,8 +84,7 @@ export default {
 </script>
 
 <style>
-
-p{
+p {
   text-align: center;
   font-style: italic;
   font-size: 150%;

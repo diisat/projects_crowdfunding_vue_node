@@ -75,11 +75,13 @@
               <thead>
                 <tr>
                   <th class="border border-first border-top txt-center">Nombre Completo</th>
+                  <th class="border border-first border-top txt-center">Cantidad Donación</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(nom, index) in nombresContribuyentes" :key="index">
-                  <td class="border">{{nom}}</td>
+                <tr v-for="(infoContrib, index) in infoContribuyentes" :key="index">
+                  <td class="border">{{infoContrib.nombre}}</td>
+                  <td class="border">{{infoContrib.cantidad}}$</td>
                 </tr>
               </tbody>
             </template>
@@ -94,7 +96,7 @@
 
     <v-layout align-center="true">
       <v-flex>
-        <v-card raised>
+        <v-card :color = "dynamic" raised>
           <v-img v-if="this.esArte == true" src="../images/arte.jpg" height="200px"></v-img>
           <v-img v-if="this.esDeporte == true" src="../images/deporte.jpg" height="200px"></v-img>
           <v-img v-if="this.esTecnologia == true" src="../images/tecnologia.jpg" height="200px"></v-img>
@@ -171,6 +173,7 @@ export default {
   },
   data() {
     return {
+      dynamic: 'white',
       esArte: false,
       esDeporte: false,
       esEducacion: false,
@@ -179,7 +182,7 @@ export default {
       nuevaDescripcion: "",
       nuevaVigencia: undefined,
       nuevaCuentaBancaria: undefined,
-      nombresContribuyentes: [],
+      infoContribuyentes: [],
       esPropio: false,
       nuevasMisDonaciones: [],
       nuevosContribuyentes: [],
@@ -190,19 +193,17 @@ export default {
       dialogoEditar: false,
       nombreAutor: "",
       desplegarTodo: false,
-      progresoPorcentaje: 0,
-      progreso: "",
-      color: ""
+      progresoPorcentaje: 0
     };
   },
   created() {
-    if(this.proyecto.categoria == "Deporte"){
+    if (this.proyecto.categoria == "Deporte") {
       this.esDeporte = true;
-    }else if(this.proyecto.categoria == "Arte"){
+    } else if (this.proyecto.categoria == "Arte") {
       this.esArte = true;
-    }else if(this.proyecto.categoria == "Educación"){
+    } else if (this.proyecto.categoria == "Educación") {
       this.esEducacion = true;
-    }else if(this.proyecto.categoria == "Tecnología"){
+    } else if (this.proyecto.categoria == "Tecnología") {
       this.esTecnologia = true;
     }
 
@@ -221,12 +222,14 @@ export default {
     if (this.id_usu == this.proyecto.idCreador) {
       this.esPropio = true;
     }
-    this.proyecto.contribuyentes.forEach(idContri => {
-      axios.get("/usuario/" + idContri).then(response => {
+    this.proyecto.contribuyentes.forEach(contribu => {
+      axios.get("/usuario/" + contribu.idContribuyente).then(response => {
         if (response.status == 200) {
-          this.nombresContribuyentes.push(
-            response.data.nombres + " " + response.data.apellidos
-          );
+          let elContri = {
+            nombre: response.data.nombres + " " + response.data.apellidos,
+            cantidad: contribu.cantidad
+          };
+          this.infoContribuyentes.push(elContri);
         }
       });
     });
@@ -237,6 +240,12 @@ export default {
     },
     misDonaciones() {
       return this.$store.state.misDonaciones;
+    },
+    nombres_usu() {
+      return this.$store.state.nombres;
+    },
+    apellidos_usu() {
+      return this.$store.state.apellidos;
     }
   },
   methods: {
@@ -285,35 +294,29 @@ export default {
         parseInt(this.proyecto.dineroActual, 10) +
         parseInt(this.cantidadDonacion, 10);
 
-      let condicion = false;
-      this.proyecto.contribuyentes.forEach(element => {
-        if (element == this.id_usu) {
-          condicion = true;
-        }
-      });
+      
 
       this.nuevosContribuyentes = this.proyecto.contribuyentes;
 
-      if (condicion == false) {
-        this.nuevosContribuyentes.push(this.id_usu);
-      }
+      let contri = {
+        idContribuyente: this.id_usu,
+        cantidad: parseInt(this.cantidadDonacion, 10)
+      };
+      this.nuevosContribuyentes.push(contri);
 
-      if (this.nuevaCantidad > this.proyecto.dineroNecesario) {
+      let proyectoEstado = true;
+
+      if (this.nuevaCantidad > this.proyecto.dineroNecesario || this.nuevaCantidad == this.proyecto.dineroNecesario) {
         this.nuevaCantidad = this.proyecto.dineroNecesario;
+        proyectoEstado = false;
       }
 
       this.proyecto.dineroActual = this.nuevaCantidad;
 
       let proyectoActualizado = {
-        nombre: this.proyecto.nombre,
-        descripcion: this.proyecto.descripcion,
-        dineroNecesario: this.proyecto.dineroNecesario,
         dineroActual: this.nuevaCantidad,
-        vigencia: this.proyecto.vigencia,
-        cuentaBancaria: this.proyecto.cuentaBancaria,
-        categoria: this.proyecto.categoria,
         contribuyentes: this.nuevosContribuyentes,
-        idCreador: this.proyecto.idCreador
+        activo: proyectoEstado
       };
 
       axios

@@ -3,7 +3,6 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import VueRouter from 'vue-router';
 import store from './config/store';
-//import pag_donar_proyecto_selec from './views/pag_donar_proyecto_selec';
 import pag_feed_proyectos from './views/pag_feed_proyectos';
 import pag_inicio_sesion from './views/pag_inicio_sesion';
 //import pag_perfil_editar from './views/pag_perfil_editar';

@@ -5,6 +5,7 @@ exports.crear = function (req, res, next) {
     let proyecto = new Proyecto({
         nombre: req.body.nombre,
         descripcion: req.body.descripcion,
+        activo: req.body.activo,
         contribuyentes: req.body.contribuyentes,
         dineroNecesario: req.body.dineroNecesario,
         dineroActual: req.body.dineroActual,

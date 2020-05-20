@@ -74,6 +74,7 @@ export default {
             "Los campos: Vigencia, Dinero necesario y Cuenta Bancaria deben ser datos numéricos."
           );
         } else {
+          let elEstado = true;
           let proyecto = {
             nombre: this.nombre,
             descripcion: this.descripcion,
@@ -82,8 +83,8 @@ export default {
             vigencia: this.vigencia,
             cuentaBancaria: this.cuentaBancaria,
             categoria: this.categoria,
-            contribuyentes: [],
-            idCreador: this.idCreador
+            idCreador: this.idCreador,
+            activo: elEstado
           };
           axios.post("/proyecto", proyecto).then(response => {
             if (response.status == 200) {
