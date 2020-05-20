@@ -11,7 +11,8 @@ let UsuarioSchema = new mongoose.Schema({
     ciudad: {type:String, required:true,max:100},
     sitiosWeb: {type:String, required:true,max:300},
     misProyectos: {type: []},
-    misDonaciones: {type: []}
+    misDonaciones: {type: []},
+    avatar:{type: String}
 })
 
 module.exports = mongoose.model('Usuario', UsuarioSchema);

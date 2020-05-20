@@ -10,7 +10,7 @@
           >-->
           <!-- AVATAR -->
           <v-avatar class="profile" color="grey" size="170" tile>
-            <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+            <v-img src="../images/avatar.png"></v-img>
           </v-avatar>
         </v-col>
 
@@ -88,6 +88,9 @@
                       dark
                       class="titulo"
                     ><i class="fa fa-upload"></i>Cargar imagen de perfil</v-btn>
+
+                    <input type="file" @change="onFileChanged">
+                    <button @click="onUpload">Upload!</button>
 
                 </div> -->
 
