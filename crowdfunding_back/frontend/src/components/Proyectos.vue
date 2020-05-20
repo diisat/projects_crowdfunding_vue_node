@@ -30,6 +30,7 @@
                   v-model="nuevaCuentaBancaria"
                   label="Cuenta Bancaria"
                 ></v-text-field>
+                <v-switch v-model="nuevoActivo" class="ma-2 margenCampos" label="Proyecto Activo"></v-switch>
               </v-col>
             </v-row>
           </v-container>
@@ -67,25 +68,13 @@
     <v-dialog v-model="dialogoContribuyentes" persistent max-width="700px">
       <v-card>
         <v-card-title>
-          <span class="headline">Estas son las personas que han contribuido a tu proyecto:</span>
+          <span class="headline">Reporte de tu proyecto:</span>
         </v-card-title>
         <v-card-text>
-          <v-simple-table fixed-header class="txt-left tablaContribuyentes">
-            <template v-slot:default>
-              <thead>
-                <tr>
-                  <th class="border border-first border-top txt-center">Nombre Completo</th>
-                  <th class="border border-first border-top txt-center">Cantidad Donación</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(infoContrib, index) in infoContribuyentes" :key="index">
-                  <td class="border">{{infoContrib.nombre}}</td>
-                  <td class="border">{{infoContrib.cantidad}}$</td>
-                </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
+          <div class="reporte">Cantidad de dinero Necesaria: {{proyecto.dineroNecesario}}$</div>
+          <div class="reporte">Cantidad de dinero Actual: {{proyecto.dineroActual}}$</div>
+          <div class="reporte">Porcentaje completado: {{progresoPorcentaje}}%</div>
+          <v-data-table :headers="headers" :items="infoContribuyentes" item-key="nombre"></v-data-table>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -96,7 +85,7 @@
 
     <v-layout align-center="true">
       <v-flex>
-        <v-card :color = "dynamic" raised>
+        <v-card :color="dynamic" raised>
           <v-img v-if="this.esArte == true" src="../images/arte.jpg" height="200px"></v-img>
           <v-img v-if="this.esDeporte == true" src="../images/deporte.jpg" height="200px"></v-img>
           <v-img v-if="this.esTecnologia == true" src="../images/tecnologia.jpg" height="200px"></v-img>
@@ -105,11 +94,10 @@
             <v-list-item-content>
               <div class="overline mb-4">{{this.nombreAutor}}</div>
               <v-list-item-title class="headline mb-1">{{proyecto.nombre}}</v-list-item-title>
-              <div class="body-2">Categoría: {{proyecto.descripcion}}</div>
+              <div class="body-2">{{proyecto.descripcion}}</div>
 
               <v-expand-transition>
                 <div class="margenContenidoExtra" v-if="this.desplegarTodo == true">
-                  <!-- <v-divider></v-divider> -->
                   <div
                     class="margenArriba body-2"
                   >{{proyecto.dineroActual}}$ / {{proyecto.dineroNecesario}}$</div>
@@ -136,7 +124,7 @@
             >Minimizar</v-btn>
             <v-btn
               @click="abrirDialogoDonar()"
-              v-if="this.desplegarTodo == true && this.esPropio == false"
+              v-if="this.desplegarTodo == true && this.esPropio == false && this.proyecto.activo"
               color="#2D7C39"
               text
             >Donar</v-btn>
@@ -145,10 +133,10 @@
               v-if="this.desplegarTodo == true && this.esPropio == true"
               color="#2D7C39"
               text
-            >Mirar Contribuyentes</v-btn>
+            >Reporte</v-btn>
             <v-btn
-              @click="abrirDialogoEditar"
-              v-if="this.desplegarTodo == true && this.esPropio == true"
+              @click="abrirDialogoEditar()"
+              v-if="this.desplegarTodo == true && this.esPropio == true && this.editable"
               icon
               class="ma-2"
               color="black"
@@ -173,7 +161,18 @@ export default {
   },
   data() {
     return {
-      dynamic: 'white',
+      headers: [
+        {
+          text: "Nombre Completo",
+          align: "start",
+          sortable: false,
+          value: "nombre"
+        },
+        { text: "Cantidad de la donación", value: "cantidad", sortable: true }
+      ],
+      editable: undefined,
+      nuevoActivo: undefined,
+      dynamic: "",
       esArte: false,
       esDeporte: false,
       esEducacion: false,
@@ -197,6 +196,17 @@ export default {
     };
   },
   created() {
+    if (this.proyecto.dineroActual == this.proyecto.dineroNecesario) {
+      this.editable = false;
+    } else {
+      this.editable = true;
+    }
+    if (this.proyecto.activo == true) {
+      this.dynamic = "#F7F7F7";
+    } else {
+      this.dynamic = "#A4A4A4";
+    }
+
     if (this.proyecto.categoria == "Deporte") {
       this.esDeporte = true;
     } else if (this.proyecto.categoria == "Arte") {
@@ -207,6 +217,7 @@ export default {
       this.esTecnologia = true;
     }
 
+    this.nuevoActivo = this.proyecto.activo;
     this.nuevoNombre = this.proyecto.nombre;
     this.nuevaDescripcion = this.proyecto.descripcion;
     this.nuevaVigencia = this.proyecto.vigencia;
@@ -273,7 +284,8 @@ export default {
           nombre: this.nuevoNombre,
           descripcion: this.nuevaDescripcion,
           vigencia: this.nuevaVigencia,
-          cuentaBancaria: this.nuevaCuentaBancaria
+          cuentaBancaria: this.nuevaCuentaBancaria,
+          activo: this.nuevoActivo
         };
         axios
           .put("/proyecto/" + this.proyecto._id, proyectoEditado)
@@ -283,35 +295,57 @@ export default {
               this.proyecto.nombre = this.nuevoNombre;
               this.proyecto.descripcion = this.nuevaDescripcion;
               this.proyecto.vigencia = this.nuevaVigencia;
-              this.cuentaBancaria = this.nuevaCuentaBancaria;
+              this.proyecto.cuentaBancaria = this.nuevaCuentaBancaria;
+              this.proyecto.activo = this.nuevoActivo;
+              this.dialogoEditar = false;
+              if (this.proyecto.activo == true) {
+                this.dynamic = "#F7F7F7";
+              } else {
+                this.dynamic = "#A4A4A4";
+              }
             }
           });
       }
-      this.dialogoEditar = false;
     },
     donar() {
       this.nuevaCantidad =
         parseInt(this.proyecto.dineroActual, 10) +
         parseInt(this.cantidadDonacion, 10);
 
-      
-
       this.nuevosContribuyentes = this.proyecto.contribuyentes;
-
-      let contri = {
-        idContribuyente: this.id_usu,
-        cantidad: parseInt(this.cantidadDonacion, 10)
-      };
-      this.nuevosContribuyentes.push(contri);
 
       let proyectoEstado = true;
 
-      if (this.nuevaCantidad > this.proyecto.dineroNecesario || this.nuevaCantidad == this.proyecto.dineroNecesario) {
+      if (
+        this.nuevaCantidad > this.proyecto.dineroNecesario ||
+        this.nuevaCantidad == this.proyecto.dineroNecesario
+      ) {
         this.nuevaCantidad = this.proyecto.dineroNecesario;
         proyectoEstado = false;
+        let contri = {
+          idContribuyente: this.id_usu,
+          cantidad:
+            parseInt(this.proyecto.dineroNecesario, 10) -
+            parseInt(this.proyecto.dineroActual, 10)
+        };
+        this.nuevosContribuyentes.push(contri);
+      } else {
+        let contri = {
+          idContribuyente: this.id_usu,
+          cantidad: parseInt(this.cantidadDonacion, 10)
+        };
+        this.nuevosContribuyentes.push(contri);
       }
 
       this.proyecto.dineroActual = this.nuevaCantidad;
+
+      this.proyecto.activo = proyectoEstado;
+
+      if (this.proyecto.activo == true) {
+        this.dynamic = "#F7F7F7";
+      } else {
+        this.dynamic = "#A4A4A4";
+      }
 
       let proyectoActualizado = {
         dineroActual: this.nuevaCantidad,
@@ -382,5 +416,12 @@ export default {
 
 .margenArriba {
   margin-top: 5%;
+}
+
+.reporte{
+  text-align: start;
+  font-size: 100%;
+  margin-left: 2%;
+  margin-bottom: 2%;
 }
 </style>
