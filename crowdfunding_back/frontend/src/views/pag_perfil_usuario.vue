@@ -80,6 +80,19 @@
           <v-container>
             <v-row>
               <v-col cols="12">
+                <!-- <div class="form-group">
+                  
+                  <v-btn
+                      type="submit"
+                      color="#43A047"
+                      dark
+                      class="titulo"
+                    ><i class="fa fa-upload"></i>Cargar imagen de perfil</v-btn>
+
+                </div> -->
+
+
+
                 <v-text-field outlined v-model="nuevoNombres" label="Nombres" required></v-text-field>
                 <v-text-field outlined v-model="nuevoApellidos" label="Apellidos" required></v-text-field>
                 <v-text-field outlined v-model="nuevaEdad" label="Edad" required></v-text-field>
@@ -222,7 +235,7 @@ export default {
     },
     editarPerfil() {
 
-      if (isNaN(this.edad)) {
+      if (isNaN(this.nuevaEdad)) {
         alert(
           "El campo de edad debe ser numérico."
         );
@@ -259,10 +272,12 @@ export default {
                 this.$store.commit("changeTheCiudad", this.nuevoCiudad);
                 this.$store.commit("changeTheSitiosWeb",this.nuevoSitiosWeb);
 
+                this.dialogoEditar = false;
+
             }
           });
       }
-      this.dialogoEditar = false;
+      
 
 
     }

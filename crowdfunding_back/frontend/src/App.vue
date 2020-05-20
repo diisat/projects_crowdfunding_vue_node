@@ -6,9 +6,7 @@
           <v-toolbar visible="false">
             <v-toolbar-items>
               
-              <!-- <v-icon class="profile" color="grey" size="40" tile>
-               <v-img src="../images/castor.png"></v-img>
-             </v-icon> -->
+              
 
               <v-btn v-if="this.sesionIniciada == false" to="/iniciarSesion">Iniciar Sesion</v-btn>
               <v-btn v-if="this.sesionIniciada == false" to="/registro">Registro</v-btn>

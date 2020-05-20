@@ -42,10 +42,11 @@ export default {
       proyectosTodos: [],
       proyectos: [],
       filtros: [
+        { titulo: "Arte" },
         { titulo: "Deporte" },
         { titulo: "Educación" },
         { titulo: "Tecnología" },
-        { titulo: "Arte" },
+        { titulo: "Terminados" },
         { titulo: "Todos" }
       ]
     };
