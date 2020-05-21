@@ -2,7 +2,7 @@
   <div>
     <v-card class="mx-auto" max-width="80%" color="#C62828" tile>
       <v-row align="center" class="fill-height">
-        <v-col align-self="start" cols="3">
+        <v-col align-self="start" cols="4">
           <!-- <v-col
           align-self="start"
           class="pa-0"
@@ -10,8 +10,8 @@
           >-->
           <!-- AVATAR -->
           <v-avatar class="profile" color="grey" size="170" tile>
-           <v-img v-if="this.genero == 'Femenino'" src="../images/avatar_mujer.jpg" ></v-img>
-          <v-img v-if="this.genero == 'Masculino'" src="../images/avatar_hombre.jpg" ></v-img>
+            <v-img v-if="this.genero == 'Femenino'" src="../images/avatar_mujer.jpg"></v-img>
+            <v-img v-if="this.genero == 'Masculino'" src="../images/avatar_hombre.jpg"></v-img>
           </v-avatar>
         </v-col>
 
@@ -38,6 +38,17 @@
             dark
             class="titulo"
           >EDITAR MI PERFIL</v-btn>
+        </v-col>
+
+        <v-col>
+          <!-- BOTON EDITAR -->
+          <v-btn
+            @click="abrirReporteGeneral()"
+            type="submit"
+            color="#A4A4A4"
+            dark
+            class="titulo"
+          >REPORTE GENERAL</v-btn>
         </v-col>
       </v-row>
     </v-card>
@@ -70,6 +81,32 @@
       </v-tabs-items>
     </v-card>
 
+    <v-dialog v-model="dialogoReporte" persistent max-width="700px">
+      <v-card class="mx-auto text-center" color="white" max-width="700">
+        <v-card-text>
+          <div color="black" class="tituloReporte display-1 font-weight-thin">
+            <b>Porcentaje de Dinero Obtenido para todos tus proyectos:</b>
+          </div>
+          <v-sheet color="#E5E5E5">
+            <v-sparkline
+              :value="value"
+              :labels="labels"
+              color="black"
+              height="150"
+              padding="2"
+              stroke-linecap="round"
+              smooth
+            ></v-sparkline>
+          </v-sheet>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions class="justify-center">
+          <v-btn color="#A51F1F" text @click="dialogoReporte = false">Cerrar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-dialog v-model="dialogoEditar" persistent max-width="600px">
       <v-card>
@@ -81,7 +118,6 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-
                 <v-text-field outlined v-model="nuevoNombres" label="Nombres" required></v-text-field>
                 <v-text-field outlined v-model="nuevoApellidos" label="Apellidos" required></v-text-field>
                 <v-text-field outlined v-model="nuevaEdad" label="Edad" required></v-text-field>
@@ -94,7 +130,6 @@
           </v-container>
         </v-card-text>
 
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="#A51F1F" text @click="dialogoEditar = false">Cancelar</v-btn>
@@ -102,9 +137,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
-
-
   </div>
 </template>
 
@@ -118,6 +150,12 @@ export default {
   },
   data() {
     return {
+
+      ultimoAgregado:false,
+
+      labels: [],
+      value: [],
+
       id: "",
       nombres: "",
       apellidos: "",
@@ -135,15 +173,16 @@ export default {
       items: [{ tab: "MIS PROYECTOS" }, { tab: "MIS DONACIONES" }],
       dialogoEditar: false,
 
-
       nuevoNombres: "",
       nuevoApellidos: "",
       nuevaEdad: 0,
       nuevoCiudad: "",
       nuevaProfesion: "",
-      nuevoCorreo:"",
-      nuevaContrasena:"",
-      nuevoSitiosWeb:""
+      nuevoCorreo: "",
+      nuevaContrasena: "",
+      nuevoSitiosWeb: "",
+
+      dialogoReporte: false
     };
   },
   computed: {
@@ -182,7 +221,7 @@ export default {
     }
   },
   created() {
-      (this.id = this.id_usu),
+    (this.id = this.id_usu),
       (this.nombres = this.nombres_usu),
       (this.apellidos = this.apellidos_usu),
       (this.correo = this.correo_usu),
@@ -191,7 +230,6 @@ export default {
       (this.ciudad = this.ciudad_usu),
       (this.genero = this.genero_usu),
       (this.sitiosWeb = this.sitiosWeb_usu),
-
       (this.nuevoNombres = this.nombres_usu),
       (this.nuevoApellidos = this.apellidos_usu),
       (this.nuevoCorreo = this.correo_usu),
@@ -200,80 +238,80 @@ export default {
       (this.nuevoCiudad = this.ciudad_usu),
       (this.nuevoSitiosWeb = this.sitiosWeb_usu),
 
-      console.log(this.misProyectos_usu);
+      this.value.push(0);
+      this.labels.push(" ");
 
-    this.misProyectos_usu.forEach(element => {
-      console.log(element);
-      axios.get("/proyecto/" + element + "").then(response => {
-        if (response.status == 200) {
-          this.misProyectos.push(response.data);
-        }
+      this.misProyectos_usu.forEach(element => {
+        axios.get("/proyecto/" + element + "").then(response => {
+          if (response.status == 200) {
+            this.misProyectos.push(response.data);
+            var porcentajeCompleto =(response.data.dineroActual / response.data.dineroNecesario) * 100;
+            var porcentajeAcotado = parseInt(porcentajeCompleto.toFixed(0));
+            this.value.push(porcentajeAcotado);
+            this.labels.push(" (" + porcentajeAcotado + "%)");
+          }
+        });
       });
-    });
+
+
 
     this.misDonaciones_usu.forEach(element => {
-      console.log(element);
       axios.get("/proyecto/" + element + "").then(response => {
         if (response.status == 200) {
           this.misDonaciones.push(response.data);
         }
       });
     });
-
-
-
   },
   methods: {
-    abrirDialogoEditar(){
+    abrirReporteGeneral() {
+      this.dialogoReporte = true;
+      if(this.ultimoAgregado == false){
+        this.value.push(0);
+      this.labels.push(" ");
+      this.ultimoAgregado = true;
+      }
+    },
+    abrirDialogoEditar() {
       this.dialogoEditar = true;
     },
     editarPerfil() {
-
       if (isNaN(this.nuevaEdad)) {
-        alert(
-          "El campo de edad debe ser numérico."
-        );
-        this.nuevaEdad= this.edad;
+        alert("El campo de edad debe ser numérico.");
+        this.nuevaEdad = this.edad;
       } else {
         let usuarioEditado = {
           nombres: this.nuevoNombres,
           apellidos: this.nuevoApellidos,
           edad: this.nuevaEdad,
-          profesion:this.nuevaProfesion,
-          sitiosWeb:this.nuevoSitiosWeb,
-          ciudad:this.nuevoCiudad,
-          correo:this.nuevoCorreo,
+          profesion: this.nuevaProfesion,
+          sitiosWeb: this.nuevoSitiosWeb,
+          ciudad: this.nuevoCiudad,
+          correo: this.nuevoCorreo
         };
-        axios
-          .put("/usuario/" + this.id, usuarioEditado)
-          .then(response => {
-            if (response.status == 200) {
-              alert("El usuario se ha editado");
-              this.nombres = this.nuevoNombres;
-              this.apellidos = this.nuevoApellidos;
-              this.edad = this.nuevaEdad;
-              this.profesion = this.nuevaProfesion;
-              this.sitiosWeb = this.nuevoSitiosWeb;
-              this.ciudad = this.nuevoCiudad;
-              this.correo = this.nuevoCorreo;
+        axios.put("/usuario/" + this.id, usuarioEditado).then(response => {
+          if (response.status == 200) {
+            alert("El usuario se ha editado");
+            this.nombres = this.nuevoNombres;
+            this.apellidos = this.nuevoApellidos;
+            this.edad = this.nuevaEdad;
+            this.profesion = this.nuevaProfesion;
+            this.sitiosWeb = this.nuevoSitiosWeb;
+            this.ciudad = this.nuevoCiudad;
+            this.correo = this.nuevoCorreo;
 
+            this.$store.commit("changeTheNombres", this.nuevoNombres);
+            this.$store.commit("changeTheApellidos", this.nuevoApellidos);
+            this.$store.commit("changeTheCorreo", this.nuevoCorreo);
+            this.$store.commit("changeTheEdad", this.nuevaEdad);
+            this.$store.commit("changeTheProfesion", this.nuevaProfesion);
+            this.$store.commit("changeTheCiudad", this.nuevoCiudad);
+            this.$store.commit("changeTheSitiosWeb", this.nuevoSitiosWeb);
 
-                this.$store.commit("changeTheNombres",this.nuevoNombres);
-                this.$store.commit("changeTheApellidos", this.nuevoApellidos);
-                this.$store.commit("changeTheCorreo", this.nuevoCorreo);
-                this.$store.commit("changeTheEdad", this.nuevaEdad);
-                this.$store.commit("changeTheProfesion", this.nuevaProfesion);
-                this.$store.commit("changeTheCiudad", this.nuevoCiudad);
-                this.$store.commit("changeTheSitiosWeb",this.nuevoSitiosWeb);
-
-                this.dialogoEditar = false;
-
-            }
-          });
+            this.dialogoEditar = false;
+          }
+        });
       }
-      
-
-
     }
   }
 };
@@ -282,6 +320,11 @@ export default {
 <style>
 .margen {
   margin: 2%;
+}
+
+.tituloReporte {
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 </style>
  

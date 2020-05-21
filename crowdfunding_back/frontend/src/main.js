@@ -10,6 +10,7 @@ import pag_perfil_usuario from './views/pag_perfil_usuario';
 import pag_publicacion_proyecto from './views/pag_publicacion_proyecto';
 import pag_registro from './views/pag_registro';
 
+
 const routes = [
   { path: "/iniciarSesion", component: pag_inicio_sesion },
   { path: "/registro", component: pag_registro },
@@ -26,6 +27,8 @@ Vue.prototype.bus = new Vue()
 
 Vue.use(VueRouter)
 Vue.use(vuetify)
+
+
 
 const router = new VueRouter({ routes });
 

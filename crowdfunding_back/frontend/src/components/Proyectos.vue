@@ -76,6 +76,8 @@
           <div class="reporte">Porcentaje completado: {{progresoPorcentaje}}%</div>
           <v-data-table :headers="headers" :items="infoContribuyentes" item-key="nombre"></v-data-table>
         </v-card-text>
+
+        
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="#A51F1F" text @click="dialogoContribuyentes = false">Cerrar</v-btn>
@@ -161,6 +163,26 @@ export default {
   },
   data() {
     return {
+     series: [{
+            data: []
+          }],
+          chartOptions: {
+            chart: {
+              type: 'bar',
+              height: 350
+            },
+            plotOptions: {
+              bar: {
+                horizontal: true,
+              }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            xaxis: {
+              categories: [],
+            }
+          },
       headers: [
         {
           text: "Nombre Completo",
@@ -230,20 +252,31 @@ export default {
     });
     this.progresoPorcentaje =
       (this.proyecto.dineroActual / this.proyecto.dineroNecesario) * 100;
+
     if (this.id_usu == this.proyecto.idCreador) {
       this.esPropio = true;
     }
+
+
     this.proyecto.contribuyentes.forEach(contribu => {
       axios.get("/usuario/" + contribu.idContribuyente).then(response => {
         if (response.status == 200) {
           let elContri = {
             nombre: response.data.nombres + " " + response.data.apellidos,
-            cantidad: contribu.cantidad
+            cantidad: contribu.cantidad,
+            
           };
+          
           this.infoContribuyentes.push(elContri);
         }
       });
+      
     });
+
+
+    
+    
+
   },
   computed: {
     id_usu() {
@@ -394,6 +427,12 @@ export default {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+#chart {
+  justify-content: center;
+  display: inline-block;
+  /* margin-left: 20%; */
+}
+
 .tablaContribuyentes {
   width: 98%;
   margin: 0.6em auto;
@@ -418,7 +457,7 @@ export default {
   margin-top: 5%;
 }
 
-.reporte{
+.reporte {
   text-align: start;
   font-size: 100%;
   margin-left: 2%;
