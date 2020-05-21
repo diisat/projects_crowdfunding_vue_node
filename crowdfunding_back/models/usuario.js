@@ -10,9 +10,9 @@ let UsuarioSchema = new mongoose.Schema({
     profesion: {type:String, required:true,max:100},
     ciudad: {type:String, required:true,max:100},
     sitiosWeb: {type:String, required:true,max:300},
+    genero: {type:String, required:true, max:100},
     misProyectos: {type: []},
-    misDonaciones: {type: []},
-    avatar:{type: String}
+    misDonaciones: {type: []}
 })
 
 module.exports = mongoose.model('Usuario', UsuarioSchema);

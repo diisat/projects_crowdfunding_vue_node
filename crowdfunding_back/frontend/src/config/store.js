@@ -13,6 +13,7 @@ export default new Vuex.Store({
     edad: 0,
     profesion: '',
     ciudad:'',
+    genero:'',
     sitiosWeb: '',
     misProyectos:'',
     misDonaciones:''
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     changeTheCiudad(state, newCiudad) {
         state.ciudad = newCiudad;
     },
+    changeTheGenero(state, newGenero) {
+      state.genero = newGenero;
+  },
     changeTheSitiosWeb(state, newSitiosWeb) {
         state.sitiosWeb = newSitiosWeb;
     },
@@ -81,6 +85,9 @@ export default new Vuex.Store({
     changeCiudad({ commit }, newCiudad) {
         commit("changeTheCiudad", newCiudad)
     },
+    changeGenero({ commit }, newGenero) {
+      commit("changeTheGenero", newGenero)
+   },
     changeSitiosWeb({ commit }, newSitiosWeb) {
         commit("changeTheSitiosWeb", newSitiosWeb)
     },

@@ -3,25 +3,48 @@
     <main>
       <div class="app-container">
         <header class="app-header">
-          <v-toolbar visible="false">
-            <v-toolbar-items>
-              
-              
+          <v-app-bar color="#9CCC65" fixed=true height="40">
+            <v-img class="mx-2" src="./images/castor.png" max-height="40" max-width="41" contain></v-img>
+            <v-toolbar-title >FUNDI</v-toolbar-title>
 
-              <v-btn v-if="this.sesionIniciada == false" to="/iniciarSesion">Iniciar Sesion</v-btn>
-              <v-btn v-if="this.sesionIniciada == false" to="/registro">Registro</v-btn>
-              </v-toolbar-items>
+            <v-spacer></v-spacer>
 
-              <v-spacer></v-spacer>
-              <v-btn  v-if="this.sesionIniciada == true" to="/proyectos" text>Proyectos</v-btn>
-               <v-btn  v-if="this.sesionIniciada == true" to="/perfil" text>Perfil</v-btn>
+            <!-- <v-btn v-if="this.sesionIniciada == false" to="/iniciarSesion">Iniciar Sesion</v-btn>
+            <v-btn v-if="this.sesionIniciada == false" to="/registro">Registro</v-btn> -->
 
-              <v-btn icon  v-if="this.sesionIniciada == true" @click="cerrarSesion"><v-icon>mdi-export</v-icon> </v-btn>
-              <!-- <v-btn v-if="this.sesionIniciada == true" @click="cerrarSesion">Salir</v-btn> -->
-            
-          </v-toolbar>
+            <v-btn v-if="this.sesionIniciada == true" to="/proyectos" text>Proyectos</v-btn>
+            <v-btn v-if="this.sesionIniciada == true" to="/perfil" text>Perfil</v-btn>
+
+            <v-btn icon v-if="this.sesionIniciada == true" @click="cerrarSesion">
+              <v-icon>mdi-export</v-icon>
+            </v-btn>
+          </v-app-bar>
         </header>
+        <v-content>
           <router-view></router-view>
+        </v-content>
+        <v-footer v-if="this.sesionIniciada == true" padless>
+          <v-row justify="center" no-gutters>
+            <v-btn
+              color="gray"
+              text
+              rounded
+              class="my-2"
+              to="/proyectos"
+            >PROYECTOS</v-btn>
+            <v-btn
+              color="gray"
+              text
+              rounded
+              class="my-2"
+              to="/acercaDe"
+            >ACERCA DE NOSOTROS</v-btn>
+            <v-col class=" py-4 text-center gray--text" cols="12">
+              {{ new Date().getFullYear() }} —
+              <strong>FUNDI</strong>
+            </v-col>
+          </v-row>
+        </v-footer>
       </div>
     </main>
   </v-app>
@@ -34,6 +57,7 @@ export default {
   data() {
     return {
       sesionIniciada: false
+      
     };
   },
   methods: {
@@ -80,8 +104,6 @@ export default {
   box-sizing: border-box;
 }
 
-
-
 .botonBarra {
   color: #2d7c39;
 }
@@ -125,6 +147,7 @@ img {
 .app-footer {
   flex: 0 1 100%;
   text-align: center;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: #ceded1;
 }
 </style>

@@ -10,7 +10,8 @@
           >-->
           <!-- AVATAR -->
           <v-avatar class="profile" color="grey" size="170" tile>
-            <v-img src="../images/avatar.png"></v-img>
+           <v-img v-if="this.genero == 'Femenino'" src="../images/avatar_mujer.jpg" ></v-img>
+          <v-img v-if="this.genero == 'Masculino'" src="../images/avatar_hombre.jpg" ></v-img>
           </v-avatar>
         </v-col>
 
@@ -80,21 +81,6 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <!-- <div class="form-group">
-                  
-                  <v-btn
-                      type="submit"
-                      color="#43A047"
-                      dark
-                      class="titulo"
-                    ><i class="fa fa-upload"></i>Cargar imagen de perfil</v-btn>
-
-                    <input type="file" @change="onFileChanged">
-                    <button @click="onUpload">Upload!</button>
-
-                </div> -->
-
-
 
                 <v-text-field outlined v-model="nuevoNombres" label="Nombres" required></v-text-field>
                 <v-text-field outlined v-model="nuevoApellidos" label="Apellidos" required></v-text-field>
@@ -140,6 +126,7 @@ export default {
       edad: 0,
       profesion: "",
       ciudad: "",
+      genero: "",
       sitiosWeb: "",
       misProyectos: [],
       misDonaciones: [],
@@ -181,6 +168,9 @@ export default {
     ciudad_usu() {
       return this.$store.state.ciudad;
     },
+    genero_usu() {
+      return this.$store.state.genero;
+    },
     sitiosWeb_usu() {
       return this.$store.state.sitiosWeb;
     },
@@ -199,6 +189,7 @@ export default {
       (this.edad = this.edad_usu),
       (this.profesion = this.profesion_usu),
       (this.ciudad = this.ciudad_usu),
+      (this.genero = this.genero_usu),
       (this.sitiosWeb = this.sitiosWeb_usu),
 
       (this.nuevoNombres = this.nombres_usu),

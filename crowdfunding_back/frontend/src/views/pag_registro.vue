@@ -2,13 +2,21 @@
   <div>
     <h2 class="margen">Registro</h2>
     <form @submit.prevent="crearUsuario">
+
       <v-text-field class="margen" v-model="nombres" label="Nombres"></v-text-field>
       <v-text-field class="margen" v-model="apellidos" label="Apellidos"></v-text-field>
+
+      <p id="genero_p" class="margen">Género : </p>
+      <v-radio-group v-model="genero" class="margen">
+          <v-radio label="Femenino" value="Femenino"></v-radio>
+          <v-radio label="Masculino" value="Masculino"></v-radio>
+      </v-radio-group>
+
+      
 
       <v-text-field class="margen" v-model="correo" label="Email"></v-text-field>
       <v-text-field
         v-model="contrasena"
-        :rules="[rules.required, rules.min]"
         :type="'password'"
         label="Contraseña"
         hint="At least 8 characters"
@@ -21,6 +29,7 @@
       <v-text-field class="margen" v-model="sitiosWeb" label="Sitios Web"></v-text-field>
 
       <v-btn type="submit" color="green" class="margen">REGISTRAR</v-btn>
+      <v-row class="margen"><p class="registro_p" >¿Ya tienes una cuenta?</p><router-link class="registro_p" to="/iniciarSesion"> ¡Inicia sesión!</router-link></v-row>
     </form>
   </div>
 </template>
@@ -38,17 +47,21 @@ export default {
         edad: 0,
         profesion: "",
         ciudad: "",
-        sitiosWeb: ""
+        sitiosWeb: "",
+        items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+        genero: ""
        
-      },
-      rules: {
-        required: value => !!value || "Required.",
-        min: v => v.length >= 8 || "Min 8 characters"
       }
+      // rules: {
+      //   required: value => !!value || "Required.",
+        
+      // }
     };
   },
   methods: {      
       crearUsuario(){
+
+
           let usuario = {
             nombres: this.nombres,
             apellidos: this.apellidos,
@@ -58,9 +71,12 @@ export default {
             profesion: this.profesion,
             ciudad: this.ciudad,
             sitiosWeb: this.sitiosWeb,
+            genero: this.genero,
             misProyectos: [],
-            misDonaciones: []
+            misDonaciones: []        
         }
+        
+      
         axios.post("/usuario",usuario)
             .then(
                 response => 
@@ -70,13 +86,24 @@ export default {
         alert("Registro exitoso. Ahora inicia sesión!");
         this.$router.push("/iniciarSesion");
       }
+      
   } 
 };
 </script>
 
 <style>
 .margen {
-  margin-top: 2%;
+  margin-top: 1%;
+}
+#genero_p {
+  font-size: 75%;
+  color: gray;
+}
+.registro_p{
+  text-align: center;
+  font-style: italic;
+  font-size: medium;
+  color: gray;
 }
 
 </style>

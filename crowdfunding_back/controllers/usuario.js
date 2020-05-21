@@ -9,9 +9,11 @@ exports.crear = function(req,res,next){
         edad: req.body.edad,
         profesion: req.body.profesion,
         ciudad: req.body.ciudad,
+        genero: req.body.genero,
         sitiosWeb: req.body.sitiosWeb,
         misProyectos: req.body.misProyectos,
-        misDonaciones: req.body.misDonaciones
+        misDonaciones: req.body.misDonaciones,
+       
     })
 
     usuario.save(err => {

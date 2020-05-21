@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 import store from './config/store';
 import pag_feed_proyectos from './views/pag_feed_proyectos';
 import pag_inicio_sesion from './views/pag_inicio_sesion';
-//import pag_perfil_editar from './views/pag_perfil_editar';
+import pag_acerca from './views/pag_acerca';
 import pag_perfil_usuario from './views/pag_perfil_usuario';
 import pag_publicacion_proyecto from './views/pag_publicacion_proyecto';
 import pag_registro from './views/pag_registro';
@@ -16,6 +16,7 @@ const routes = [
   { path: "/perfil", component: pag_perfil_usuario },
   { path: "/publicar", component: pag_publicacion_proyecto },
   { path: "/proyectos", component: pag_feed_proyectos },
+  { path: "/acercaDe", component: pag_acerca }
 ]
 
 

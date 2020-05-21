@@ -1,9 +1,10 @@
 <template>
   <div class="margen">
-    <h2 class="titulo">Inicio de Sesion</h2>
-    <v-text-field outlined v-model="email" label="Email"></v-text-field>
+    <h2 class="titulo">INICIO DE SESIÓN</h2>
+    <v-text-field outlined v-model="email" label="Correo electrónico"></v-text-field>
     <v-text-field outlined v-model="contrasena" :type="'password'" label="Contraseña"></v-text-field>
-    <v-btn @click="iniciarSesion" type="submit" color="#A51F1F" dark class="titulo">INICIAR SESION</v-btn>
+    <v-row><p class="registro_p" >¿Primera vez en FUNDI?</p><router-link class="registro_p" to="/registro"> ¡Registrate aquí!</router-link></v-row>
+    <center><v-btn @click="iniciarSesion" type="submit" color="#A51F1F" dark class="titulo" width=100% >ENTRAR</v-btn></center>
   </div>
 </template>
 
@@ -39,6 +40,7 @@ export default {
                 this.$store.commit("changeTheEdad", element.edad);
                 this.$store.commit("changeTheProfesion", element.profesion);
                 this.$store.commit("changeTheCiudad", element.ciudad);
+                this.$store.commit("changeTheGenero", element.genero);
                 this.$store.commit("changeTheSitiosWeb", element.sitiosWeb);
                 this.$store.commit("changeTheMisProyectos", element.misProyectos);
                 this.$store.commit("changeTheMisDonaciones", element.misDonaciones);
@@ -60,6 +62,14 @@ export default {
 </script>
 
 <style>
+
+.registro_p{
+  text-align: center;
+  font-style: italic;
+  font-size: medium;
+  color: gray;
+}
+
 .margen {
   margin-left: 20%;
   margin-right: 20%;
